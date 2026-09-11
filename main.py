@@ -97,11 +97,11 @@ async def analizar(ctx):
                         """
                     
                     response = groq_client.chat.completions.create(
-                        model="qwen/qwen3.8-27b",
-                        messages=[{"role": "user", "content": prompt}],
-                        temperature=0.3,
-                        max_tokens=1024
-                    )
+                       model="llama-3.1-8b-instant",
+                       messages=[{"role": "user", "content": prompt}],
+                       temperature=0.3,
+                       max_tokens=500
+                   )
                     
                     analysis = response.choices[0].message.content
                     
