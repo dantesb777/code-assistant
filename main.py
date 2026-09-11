@@ -119,6 +119,17 @@ async def analizar(ctx):
     except Exception as e:
         await ctx.send(f"❌ Error general: {str(e)[:200]}")
 
+@bot.command(name='score')
+async def score(ctx):
+    """Muestra estadísticas del bot"""
+    await ctx.send(f"📊 **Estadísticas:**\n- Servidores: {len(bot.guilds)}\n- Usuarios: {sum(g.member_count for g in bot.guilds)}")
+
+@bot.command(name='ping')
+async def ping(ctx):
+    """Verifica la latencia del bot"""
+    latency = round(bot.latency * 1000)
+    await ctx.send(f"🏓 Pong! {latency}ms")
+
 # ========== INICIAR TODO ==========
 if __name__ == "__main__":
     flask_thread = Thread(target=run_flask)
