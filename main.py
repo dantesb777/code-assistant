@@ -84,7 +84,7 @@ async def analizar(ctx):
                 try:
                     file_content = content.decoded_content.decode('utf-8')
                     
-                      prompt = f"Analiza este código en ESPAÑOL. Responde SOLO con: Score: X/10, Bugs: [lista], Mejoras: [lista]. Código: {file_content[:300]}"
+                    prompt = f"Analiza este código en ESPAÑOL. Responde SOLO con: Score: X/10, Bugs: [lista], Mejoras: [lista]. Código: {file_content[:300]}"
                     
                     response = groq_client.chat.completions.create(
                         model="qwen/qwen3.6-27b",
