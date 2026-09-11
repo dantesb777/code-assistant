@@ -85,22 +85,16 @@ async def analizar(ctx):
                     file_content = content.decoded_content.decode('utf-8')
                     
                     prompt = f"""
-                    Analiza este código ({content.name}).
-                    Responde OBLIGATORIAMENTE en ESPAÑOL.
-                    
-                    REGLAS ESTRICTAS:
-                    1. NO muestres tu proceso de pensamiento.
-                    2. NO uses etiquetas <think> ni expliques tu razonamiento.
-                    3. Responde ÚNICAMENTE con el formato final.
-
-                    Código a analizar:
-                    {file_content[:1000]}
-
-                    Responde EXACTAMENTE en este formato:
-                    Score: X/10
-                    Bugs: [lista en español]
-                    Mejoras: [lista en español]
-                    """
+                        Analiza este código en español. No muestres tu razonamiento.
+                        
+                        Código:
+                        {file_content[:1000]}
+                        
+                        Responde solo con:
+                        Score: X/10
+                        Bugs: [lista]
+                        Mejoras: [lista]
+                        """
                     
                     response = groq_client.chat.completions.create(
                         model="qwen/qwen3.8-27b",
