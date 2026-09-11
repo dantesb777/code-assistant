@@ -65,6 +65,8 @@ async def estado(ctx):
     status += f"✅ GitHub: {'OK' if github_client else 'ERROR'}\n"
     await ctx.send(status)
 
+
+
 @bot.command(name='analizar')
 async def analizar(ctx):
     await ctx.send("🔍 Iniciando análisis del repositorio...")
@@ -119,6 +121,40 @@ async def ping(ctx):
     """Verifica la latencia del bot"""
     latency = round(bot.latency * 1000)
     await ctx.send(f"🏓 Pong! {latency}ms")
+
+@bot.command(name='revisar')
+async def revisar(ctx, *, codigo: str):
+    """Analiza un fragmento de código pegado directamente en Discord"""
+    await ctx.send("🔍 Analizando tu código...")
+    
+    # Limitamos a 1500 caracteres para que la IA no se sature
+    codigo_corto = codigo[:1500] 
+    
+    prompt = f"""Analiza este código en ESPAÑOL. 
+    REGLA ABSOLUTA: Responde ÚNICAMENTE con el formato final. NO muestres tu proceso de pensamiento, NO uses etiquetas <think>.
+    
+    Formato exacto:
+    Score: X/10
+    Bugs: [lista]
+    Mejoras: [lista]
+    
+    Código a analizar:
+    {codigo_corto}
+    """
+    
+    try:
+        response = groq_client.chat.completions.create(
+            model="qwen/qwen3.6-27b",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.2,
+            max_tokens=400
+        )
+        
+        analisis = response.choices[0].message.content
+        await ctx.send(f"📄 **Resultado del análisis:**\n{analisis}")
+        
+    except Exception as e:
+        await ctx.send(f"❌ Error al analizar: {str(e)[:100]}")
 
 # ========== INICIAR TODO ==========
 if __name__ == "__main__":
